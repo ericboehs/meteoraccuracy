@@ -1,0 +1,20 @@
+databases:
+  - name: meteoraccuracy
+    databaseName: meteoraccuracy
+    user: meteoraccuracy
+
+services:
+  - type: web
+    name: meteoraccuracy
+    runtime: ruby
+    buildCommand: "./bin/render-build"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: meteoraccuracy
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_SERVE_STATIC_FILES
+        value: true
